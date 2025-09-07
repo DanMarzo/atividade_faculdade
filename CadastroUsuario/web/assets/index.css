@@ -1,0 +1,8 @@
+#senha {
+    border-top-right-radius: 0.375rem; /* igual ao padrão do Bootstrap */
+    border-bottom-right-radius: 0.375rem;
+}
+
+#btn-handle-senha {
+    z-index: 99;
+}
