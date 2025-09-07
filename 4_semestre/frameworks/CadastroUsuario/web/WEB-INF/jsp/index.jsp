@@ -1,7 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -162,7 +159,7 @@
             <div class="row align-items-center col-3">
                 <div >
                     <label for="complemento" class="col-form-label border-rounded-left bg-primary-app">Complemento</label>
-                    <input data-form="complemento" type="text" id="complemento" class="form-control" />
+                    <input required data-form="complemento" type="text" id="complemento" class="form-control" />
                 </div>
                 <div class="col-12">
                     <span id="complementoHelpInline" class="form-text"></span>

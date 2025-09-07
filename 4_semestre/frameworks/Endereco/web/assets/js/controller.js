@@ -1,4 +1,3 @@
-
 $(window).on("pageshow", () => {
     setLoading(false);
 });
@@ -25,7 +24,8 @@ $('#cep').on("input", async (e) => {
                     let response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
                     if (response.ok) {
                         let endereco = await response.json();
-
+                        console.log(endereco);
+                        console.log(`CEP ${cep}`);
                         $("[data-form]").each(function () {
                             let nameInput = $(this).attr('data-form'); // pega o valor do atributo
 

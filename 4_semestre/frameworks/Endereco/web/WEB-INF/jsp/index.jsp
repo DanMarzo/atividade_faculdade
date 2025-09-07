@@ -1,7 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,9 +6,7 @@
         <link  rel="stylesheet" href="./assets/css/style.css?v=5"></link>
         <title>Cadastre-se</title>
     </head>
-
     <body>
-
         <!-- Endereco -->
         <div class="container text-center">
             <h3>ENDEREÇO</h3>
@@ -26,7 +21,6 @@
                         <span id="cepHelpInline" class="form-text"></span>
                     </div>
                 </div>
-
                 <!-- Rua -->
                 <div class="row g-3 align-items-center col-6">
                     <div class="d-flex">
@@ -37,8 +31,7 @@
                         <span id="ruaHelpInline" class="form-text"></span>
                     </div>
                 </div>
-            </div>
-
+            </div> 
             <div class="row justify-content-between">
                 <!-- Bairro -->
                 <div class="row g-3 align-items-center col-4">
@@ -50,8 +43,6 @@
                         <span id="bairroHelpInline" class="form-text"></span>
                     </div>
                 </div>
-
-
                 <!-- Cidade -->
                 <div class="row g-3 align-items-center col-4">
                     <div class="d-flex">
@@ -62,8 +53,6 @@
                         <span id="cidadeHelpInline" class="form-text"></span>
                     </div>
                 </div>
-
-
                 <!-- Estado -->
                 <div class="row g-3 align-items-center col-4">
                     <div class="d-flex">
@@ -75,9 +64,7 @@
                     </div>
                 </div>
             </div>
-
             <div class="row justify-content-between">
-
                 <!-- Estado -->
                 <div class="row g-3 align-items-center col-6">
                     <div class="d-flex">
@@ -88,7 +75,6 @@
                         <span id="numeroHelpInline" class="form-text"></span>
                     </div>
                 </div>
-
                 <!-- Complemento -->
                 <div class="row g-3 align-items-center col-6">
                     <div class="d-flex">
@@ -102,11 +88,9 @@
             </div>
             <button class="btn btn-primary">CADASTRAR</button>
         </div>
-       
         <!-- Spinner -->
         <div id="loading">
             <div class="spinner"></div>
-
         </div>
     </body>
 
@@ -116,6 +100,4 @@
     <script 
         src="./assets/js/controller.js?v=5" 
     ></script>
-
-
 </html>
