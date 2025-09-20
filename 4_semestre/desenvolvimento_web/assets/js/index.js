@@ -9,5 +9,6 @@ $("#signo-form").on("submit", async (event) => {
         event.target.submit();
         return
     }
+    alert("Inclua uma data de nascimento")
     return
 });
