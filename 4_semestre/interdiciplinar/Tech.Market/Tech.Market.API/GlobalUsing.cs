@@ -1,0 +1,8 @@
+﻿global using Dapper;
+global using Microsoft.Extensions.Options;
+global using Npgsql;
+global using System.Data.Common;
+global using Tech.Market.API.Contracts;
+global using Tech.Market.API.Options;
+global using Tech.Market.API.Entities;
+global using Tech.Market.API.Repositories;
