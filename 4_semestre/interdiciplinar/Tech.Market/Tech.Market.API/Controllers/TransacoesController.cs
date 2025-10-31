@@ -72,5 +72,27 @@ namespace Tech.Market.API.Controllers
             //Cara, isso e so um trabalho de faculdade, nao faz sentido criar um dto para response
             return Created("", novaTransacaoTask.Result);
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetTransacaoAsync([FromQuery] IEnumerable<int>? idsContas = null)
+        {
+            IEnumerable<TransacaoEntity> transacoes = await this._transacaoRepository.GetAsync(idsContas);
+
+            List<int> ids = transacoes.DistinctBy(x => x.IdContaDestino).Select(x => x.IdContaDestino).ToList();
+            ids.AddRange(transacoes.DistinctBy(x => x.IdConta).Select(x => x.IdConta));
+
+            ids = ids.Distinct().ToList();
+
+            IEnumerable<ContaEntity> contas = await this._contaRepository.GetAsync(ids);
+            return Ok(transacoes.Select(x => new
+            {
+                x.IdConta,
+                ContaOrigem = contas.First(c => c.Id == x.IdConta),
+                x.IdContaDestino,
+                ContaDestino = contas.First(d => d.Id == x.IdContaDestino),
+                x.CodigoOperacao
+            }));
+        }
     }
 }
