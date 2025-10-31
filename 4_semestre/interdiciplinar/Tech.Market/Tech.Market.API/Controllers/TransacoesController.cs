@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Tech.Market.API.DTOs;
+using Tech.Market.Core.DTOs;
 
 namespace Tech.Market.API.Controllers
 {
@@ -85,14 +86,12 @@ namespace Tech.Market.API.Controllers
             ids = ids.Distinct().ToList();
 
             IEnumerable<ContaEntity> contas = await this._contaRepository.GetAsync(ids);
-            return Ok(transacoes.Select(x => new
-            {
-                x.IdConta,
-                ContaOrigem = contas.First(c => c.Id == x.IdConta),
-                x.IdContaDestino,
-                ContaDestino = contas.First(d => d.Id == x.IdContaDestino),
-                x.CodigoOperacao
-            }));
+            return Ok(
+                transacoes.Select(x => new TransacaoDTO(
+                    conta: contas.First(c => c.Id == x.IdConta),
+                    contaDestino: contas.First(c => c.Id == x.IdContaDestino),
+                    transacao: x
+                    )));
         }
     }
 }
