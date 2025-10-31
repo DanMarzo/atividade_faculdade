@@ -1,6 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Tech.Market.Core.DTOs;
+using Tech.Market.Web.Constantes;
 using Tech.Market.Web.Models;
+using Tech.Market.Web.Models.HomeModels;
 
 namespace Tech.Market.Web.Controllers
 {
@@ -14,10 +19,14 @@ namespace Tech.Market.Web.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        public IActionResult Index(int? idConta = null)
+        public async Task<IActionResult> Index(int? idConta = null)
         {
-
-            return View();
+            using HttpClient http = this._httpClientFactory.CreateClient(URIConts.URL_TECH);
+            using HttpResponseMessage response = await http.GetAsync($"/api/transacoes?{(idConta.HasValue ? $"idsContas={idConta}" : "")}");
+            string content = await response.Content.ReadAsStringAsync();
+            IEnumerable<TransacaoDTO> transacoes = JsonSerializer.Deserialize<IEnumerable<TransacaoDTO>>(content) 
+                    ?? Enumerable.Empty<TransacaoDTO>();
+            return View(new HomeViewModel(transacoes));
         }
 
         public IActionResult Privacy()

@@ -1,9 +1,11 @@
+using Tech.Market.Web.Constantes;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddHttpClient("Tech", cfg =>
+builder.Services.AddHttpClient(URIConts.URL_TECH, cfg =>
 {
     cfg.BaseAddress = new Uri(builder.Configuration.GetValue<string>("Urls:TechMarketAPI")!);
 });
