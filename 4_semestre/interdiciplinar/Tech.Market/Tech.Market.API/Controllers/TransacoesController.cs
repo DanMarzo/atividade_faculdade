@@ -22,38 +22,51 @@ namespace Tech.Market.API.Controllers
         [HttpPost]
         public async Task<IActionResult> PostTransacaoAsync(TransacaoRequestDTO request)
         {
-            if (!request.IdConta.HasValue)
+            if (!request.IdConta.HasValue || !request.IdContaDestino.HasValue)
                 return BadRequest(new { message = "Conta inválida." });
 
-            Task<bool> contaExisteTask = this._contaRepository.ExistsAsync(request.IdConta.Value);
-            Task<SaldoEntity?> saldoTask = this._saldoRepository.GetByContaAsync(request.IdConta.Value);
+            Task<bool> contaOrigemExistTask = this._contaRepository.ExistsAsync(request.IdConta.Value);
+            Task<SaldoEntity?> saldoOrigemTask = this._saldoRepository.GetByContaAsync(request.IdConta.Value);
 
-            await Task.WhenAll(contaExisteTask, saldoTask);
+            Task<bool> contaDestinoExisteTask = this._contaRepository.ExistsAsync(request.IdContaDestino.Value);
+            Task<SaldoEntity?> saldoDestinoTask = this._saldoRepository.GetByContaAsync(request.IdContaDestino.Value);
 
-            if (!contaExisteTask.Result)
+
+            await Task.WhenAll(contaOrigemExistTask, saldoOrigemTask, contaDestinoExisteTask, saldoDestinoTask);
+
+            if (!contaOrigemExistTask.Result || !contaDestinoExisteTask.Result)
                 return NotFound(new { message = "Conta não localizada." });
 
-            SaldoEntity? saldo = saldoTask.Result;
-            if (saldo == null)
+            Dictionary<int, SaldoEntity?> saldos = new Dictionary<int, SaldoEntity?>()
             {
-                saldo = await this._saldoRepository
-                    .InsertAsync(new SaldoEntity(
-                        idConta: request.IdConta.Value, 
-                        valor: request.GetValorPorTipoOperacao()
-                        ));
+                { request.IdConta.Value, saldoOrigemTask.Result},
+                { request.IdContaDestino.Value, saldoDestinoTask.Result}
+            };
+
+            if (saldos.Any(x => x.Value == null))
+            {
+                //Talvez nao seja necessario mas para evitar BO
+                IEnumerable<SaldoEntity> saldosEntities = await this._saldoRepository.InsertAsync(entities: saldos.Where(x => x.Value == null).Select(x => new SaldoEntity
+                {
+                    IdConta = x.Key,
+                    Valor = 0
+                }));
+                foreach (var item in saldosEntities)
+                { saldos[item.IdConta] = item; }
             }
+            if (saldos.Any(x => x.Value == null))
+                return BadRequest(new { message = "Erro desconhecido." });
 
-            if (request.Saida && saldo.Valor < request.Valor)
-                return BadRequest(new { message = "Esta conta não possui saldo suficiente" });
+            if (saldos[request.IdConta.Value]!.Valor < request.Valor)
+                return BadRequest(new { message = "Esta conta não possui saldo suficiente para realizar a transferencia" });
 
-            if (request.Saida)
-                saldo.Valor -= request.Valor;
-            else
-                saldo.Valor += request.Valor;
+            saldos[request.IdContaDestino.Value]!.Valor += request.Valor;
+            saldos[request.IdConta.Value]!.Valor -= request.Valor;
 
-            Task<bool> updateSaldoTask = this._saldoRepository.UpdateAsync(saldo);
+            Task<IEnumerable<SaldoEntity>> updateSaldoTask = this._saldoRepository.InsertAsync(entities: saldos.Select(x => x.Value));
+
             Task<TransacaoEntity> novaTransacaoTask = this._transacaoRepository
-                 .InsertAsync(new TransacaoEntity(idConta: request.IdConta.Value, request.Saida, request.Valor));
+                 .InsertAsync(new TransacaoEntity(idConta: request.IdConta.Value, idContaDestino: request.IdContaDestino.Value, valor: request.Valor));
 
             await Task.WhenAll(novaTransacaoTask, updateSaldoTask);
             //Cara, isso e so um trabalho de faculdade, nao faz sentido criar um dto para response

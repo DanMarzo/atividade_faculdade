@@ -11,14 +11,13 @@
         {
             string sql = @"
                 INSERT INTO public.transacoes
-                (codigooperacao, idconta, saida, valor)
+                (CodigoOperacao, idconta, idcontaDestino, valor)
                 VALUES
-                (gen_random_uuid(), @IdConta, @Saida, @valor)
+                (@CodigoOperacao, @IdConta, @idcontaDestino, @valor)
                 RETURNING *;
             ";
             using (DbConnection connection = new NpgsqlConnection(this._connection.Default))
             {
-                
                 return await connection.QueryFirstAsync<TransacaoEntity>(sql, param: entity);
             }
         }

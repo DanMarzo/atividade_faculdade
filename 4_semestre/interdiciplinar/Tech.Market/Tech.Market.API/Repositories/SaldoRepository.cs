@@ -1,4 +1,5 @@
-﻿namespace Tech.Market.API.Repositories
+﻿
+namespace Tech.Market.API.Repositories
 {
     public class SaldoRepository : ISaldoRepository
     {
@@ -35,6 +36,33 @@
                 
                 return await connection.QueryFirstAsync<SaldoEntity>(sql, entity);
             }
+        }
+
+        public async Task<IEnumerable<SaldoEntity>> InsertAsync(IEnumerable<SaldoEntity> entities)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            
+            string values = string.Join(", ", entities.Select((e, i) =>
+            {
+
+                parameters.Add($"valor{i}", e.Valor);
+                parameters.Add($"idConta{i}", e.IdConta);
+                return $"(@valor{i}, @idconta{i})";
+            }));
+
+            string sql = $@"
+                    INSERT INTO public.saldos (valor, idconta)
+                    VALUES {values}
+                    ON CONFLICT (idconta)
+                    DO UPDATE 
+                        SET valor = EXCLUDED.valor
+                    RETURNING *;
+                ";
+
+            using (DbConnection connection = new NpgsqlConnection(this._connection.Default))
+            {
+                return await connection.QueryAsync<SaldoEntity>(sql, parameters);
+            }                
         }
 
         public async Task<bool> UpdateAsync(SaldoEntity entity)
