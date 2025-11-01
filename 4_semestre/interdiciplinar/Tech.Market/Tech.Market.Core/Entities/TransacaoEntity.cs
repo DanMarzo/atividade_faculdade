@@ -1,4 +1,4 @@
-﻿namespace Tech.Market.API.Entities
+﻿namespace Tech.Market.Core.Entities
 {
     public class TransacaoEntity
     {

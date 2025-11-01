@@ -1,12 +1,15 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Tech.Market.API.Entities
+namespace Tech.Market.Core.Entities
 {
     public class ContaEntity
     {
-        [JsonPropertyName("id")]
         public int Id { get; set; }
-        [JsonPropertyName("nome")]
+
+        public Guid IdExterno { get; set; }
+
         public string Nome { get; set; }
+        public string Cpf { get; set; }
+
     }
 }

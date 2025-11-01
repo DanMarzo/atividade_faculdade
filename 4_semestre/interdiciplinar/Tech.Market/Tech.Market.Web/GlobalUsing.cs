@@ -1,0 +1,12 @@
+﻿global using Microsoft.AspNetCore.Mvc;
+global using System.Diagnostics;
+global using System.Text.Json;
+global using System.Threading.Tasks;
+global using Tech.Market.Core.DTOs;
+global using Tech.Market.Web.Constantes;
+global using Tech.Market.Web.Models;
+global using Tech.Market.Web.Models.HomeModels;
+global using Tech.Market.Web.Contracts;
+global using Tech.Market.Web.Services;
+global using Tech.Market.Core.Entities;
+global using Tech.Market.Web.Models.TransacoesModels;

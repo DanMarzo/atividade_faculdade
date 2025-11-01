@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using Tech.Market.API.Entities;
+using Tech.Market.Core.Entities;
 
 namespace Tech.Market.Core.DTOs
 {
@@ -7,7 +7,7 @@ namespace Tech.Market.Core.DTOs
     {
         public TransacaoDTO()
         { }
-        public TransacaoDTO(ContaEntity conta, ContaEntity contaDestino, TransacaoEntity transacao)
+        public TransacaoDTO(ContaDTO conta, ContaDTO contaDestino, TransacaoEntity transacao)
         {
             this.IdConta = conta.Id;
             this.Conta = conta;
@@ -16,14 +16,14 @@ namespace Tech.Market.Core.DTOs
             this.CodigoOperacao = transacao.CodigoOperacao;
         }
         [JsonPropertyName("idConta")]
-        public int IdConta { get; set; }
+        public Guid IdConta { get; set; }
         [JsonPropertyName("conta")]
-        public ContaEntity Conta { get; set; }
+        public ContaDTO Conta { get; set; }
         [JsonPropertyName("idContaDestino")]
-        public int IdContaDestino { get; set; }
+        public Guid IdContaDestino { get; set; }
 
         [JsonPropertyName("contaDestino")]
-        public ContaEntity ContaDestino { get; set; }
+        public ContaDTO ContaDestino { get; set; }
 
         [JsonPropertyName("codigoOperacao")]
         public Guid CodigoOperacao { get; set; }

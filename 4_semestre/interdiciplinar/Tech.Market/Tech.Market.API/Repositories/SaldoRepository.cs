@@ -1,4 +1,6 @@
 ﻿
+using Tech.Market.Core.Entities;
+
 namespace Tech.Market.API.Repositories
 {
     public class SaldoRepository : ISaldoRepository

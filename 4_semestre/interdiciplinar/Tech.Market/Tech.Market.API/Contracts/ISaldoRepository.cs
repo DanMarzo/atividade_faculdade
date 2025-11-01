@@ -1,4 +1,6 @@
-﻿namespace Tech.Market.API.Contracts
+﻿using Tech.Market.Core.Entities;
+
+namespace Tech.Market.API.Contracts
 {
     public interface ISaldoRepository
     {

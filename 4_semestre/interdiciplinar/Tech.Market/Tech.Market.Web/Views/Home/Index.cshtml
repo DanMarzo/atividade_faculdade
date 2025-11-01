@@ -2,15 +2,34 @@
 @model HomeViewModel
 
 @{
-	ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Contas";
 }
 
 <div class="text-center">
 	<h1 class="display-4">Extrato</h1>
-	<ul>
-		@foreach (var item in Model.Transacoes)
-		{
-			<li>@item.Conta.Nome</li>
-		}
+	<ul class="list-group">
+		
 	</ul>
+
+	@* <div class="list-group">
+		@foreach (var item in Model.Contas)
+		{
+			<a asp-area=""
+				asp-action="Index" 
+				asp-controller="Transacoes" 
+				asp-route-id="@item.Id" 
+				class="list-group-item list-group-item-action text-start" 
+				aria-current="true">
+				@item.Nome
+			</a>
+		}
+	</div> *@
+	@foreach (var item in Model.Contas)
+	{
+		<a 
+		   asp-controller="Transacoes"
+		   asp-route-id="@item.Id">
+			@item.Nome
+		</a>
+	}
 </div>

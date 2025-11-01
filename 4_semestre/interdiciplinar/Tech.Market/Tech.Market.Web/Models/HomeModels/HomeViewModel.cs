@@ -1,14 +1,12 @@
-﻿using Tech.Market.Core.DTOs;
-
-namespace Tech.Market.Web.Models.HomeModels
+﻿namespace Tech.Market.Web.Models.HomeModels
 {
     public class HomeViewModel
     {
-        public IEnumerable<TransacaoDTO> Transacoes { get; set; }
+        public IEnumerable<ContaDTO> Contas { get; set; }
 
-        public HomeViewModel(IEnumerable<TransacaoDTO> transacoes)
+        public HomeViewModel(IEnumerable<ContaDTO> contas)
         {
-            Transacoes = transacoes;
+            Contas = contas;
         }
     }
 }

@@ -1,32 +1,22 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Tech.Market.Core.DTOs;
-using Tech.Market.Web.Constantes;
-using Tech.Market.Web.Models;
-using Tech.Market.Web.Models.HomeModels;
-
 namespace Tech.Market.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IHttpClientFactory _httpClientFactory;
-        public HomeController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
+        private readonly ITransacoesService _transacoesService;
+        private readonly IContasService _contasService;
+
+        public HomeController(ILogger<HomeController> logger, ITransacoesService transacoesService, IContasService contasService)
         {
             _logger = logger;
-            _httpClientFactory = httpClientFactory;
+            _transacoesService = transacoesService;
+            _contasService = contasService;
         }
 
-        public async Task<IActionResult> Index(int? idConta = null)
+        public async Task<IActionResult> Index()
         {
-            using HttpClient http = this._httpClientFactory.CreateClient(URIConts.URL_TECH);
-            using HttpResponseMessage response = await http.GetAsync($"/api/transacoes?{(idConta.HasValue ? $"idsContas={idConta}" : "")}");
-            string content = await response.Content.ReadAsStringAsync();
-            IEnumerable<TransacaoDTO> transacoes = JsonSerializer.Deserialize<IEnumerable<TransacaoDTO>>(content) 
-                    ?? Enumerable.Empty<TransacaoDTO>();
-            return View(new HomeViewModel(transacoes));
+            IEnumerable<ContaDTO> contas = await this._contasService.GetAsync();
+            return View(new HomeViewModel(contas));
         }
 
         public IActionResult Privacy()

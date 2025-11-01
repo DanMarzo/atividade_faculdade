@@ -1,6 +1,4 @@
-﻿
-using System.Text;
-using static Dapper.SqlMapper;
+﻿using Tech.Market.Core.Entities;
 
 namespace Tech.Market.API.Repositories
 {
@@ -12,21 +10,21 @@ namespace Tech.Market.API.Repositories
             this._connection = connection.Value;
         }
 
-        public async Task<IEnumerable<TransacaoEntity>> GetAsync(IEnumerable<int>? idsContas = null)
+        public async Task<IEnumerable<TransacaoEntity>> GetAsync(int? idConta = null)
         {
             StringBuilder sql = new StringBuilder(@"
                 SELECT transacoes.* FROM transacoes
                 INNER JOIN contas ON contas.id  = transacoes.idconta 
                 WHERE 1 = 1 
             ");
-            if (idsContas != null && idsContas.Any())
-                sql.AppendLine(" AND contas.id IN @idsContas ");
+            if (idConta.HasValue)
+                sql.AppendLine(" AND contas.id = @idConta ");
 
             using (DbConnection connection = new NpgsqlConnection(this._connection.Default))
             {
                 return await connection.QueryAsync<TransacaoEntity>(sql.ToString(), param: new
                 {
-                    idsContas
+                    idConta
                 });
             }
         }
