@@ -11,7 +11,7 @@
 		
 	</ul>
 
-	@* <div class="list-group">
+	<div class="list-group">
 		@foreach (var item in Model.Contas)
 		{
 			<a asp-area=""
@@ -23,13 +23,5 @@
 				@item.Nome
 			</a>
 		}
-	</div> *@
-	@foreach (var item in Model.Contas)
-	{
-		<a 
-		   asp-controller="Transacoes"
-		   asp-route-id="@item.Id">
-			@item.Nome
-		</a>
-	}
+	</div>
 </div>

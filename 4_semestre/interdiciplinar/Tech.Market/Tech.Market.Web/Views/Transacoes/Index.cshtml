@@ -4,5 +4,39 @@
 	ViewData["Title"] = $"{Model.Conta.Nome} - Transações";
 }
 
+<div class="row">
+	<div class="col-sm-12 col-md-4 p-2">
+		<div class="card w-100 position-relative">
+			<a asp-action="Index" asp-controller="Home" class="position-absolute top-0 end-0 p-2"><i class="bi bi-arrow-left"></i></a>
+			<div class="card-body">
+				<h5 class="card-title">@Model.Conta.Nome</h5>
+				<p class="card-text">@Model.Conta.CpfMask</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-8 p-2">
+		<ul class="list-group">
+			@foreach (var item in Model.Transacoes)
+			{
+				<li class="list-group-item list-group-item-action text-start" aria-current="true">
+					<div class="fw-bold">Cód. operação: </div>
+					<div>@item.CodigoOperacao</div>
+					<hr class="m-1" />
+					<div class="fw-bold">Destinatário: </div>
+					<div>@item.ContaDestino.Nome</div>
+					<hr class="m-1" />
+					<div class="fw-bold">CPF: </div>
+					<div>@item.ContaDestino.CpfMask</div>
+				</li>
+			}
+		</ul>
+	</div>
+</div>
 
-
+@section Scripts {
+	<script 
+		src="/js/transacoes.js?v=@Guid.NewGuid()"
+		data-empty="@(!Model.Transacoes.Any())"
+	>
+	</script>
+}

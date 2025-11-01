@@ -24,5 +24,15 @@ namespace Tech.Market.Core.DTOs
 
         [JsonPropertyName("cpf")]
         public string Cpf { get; set; }
+
+        public string CpfMask => MaskCpfPartial(this.Cpf);
+        public string MaskCpfPartial(string cpf)
+        {
+            if (string.IsNullOrEmpty(cpf) || cpf.Length != 11)
+                return cpf;
+            string masked = $"{cpf.Substring(0, 3)}.{new string('*', 3)}.{new string('*', 3)}-{cpf.Substring(9, 2)}";
+            return masked;
+        }
+
     }
 }
