@@ -97,7 +97,7 @@ const NovaTransferenciaComponent = ({
             control={formSigIn.control}
             name="valor"
             defaultValue=""
-            render={({ field, formState }) => (
+            render={({ field }) => (
               <>
                 <LabelLogin htmlFor={"valor"} label={"valor"} />
                 <Input
