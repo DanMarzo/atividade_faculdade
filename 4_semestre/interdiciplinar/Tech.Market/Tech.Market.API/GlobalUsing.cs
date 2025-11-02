@@ -1,6 +1,5 @@
 ﻿global using Dapper;
 global using Microsoft.Extensions.Options;
-global using Npgsql;
 global using System.Data.Common;
 global using Tech.Market.API.Contracts;
 global using Tech.Market.API.Options;
@@ -9,3 +8,5 @@ global using Microsoft.AspNetCore.Mvc;
 global using System.Linq;
 global using System.Text;
 global using static Dapper.SqlMapper;
+global using Microsoft.Data.SqlClient;
+global using Tech.Market.Core.Entities;

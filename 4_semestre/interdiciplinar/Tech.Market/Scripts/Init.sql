@@ -1,35 +1,43 @@
-CREATE DATABASE TechMarketDB;
+CREATE DATABASE TECH_MARKET_DB;
+go
+
+USE TECH_MARKET_DB;
 
 CREATE TABLE Contas
 (
-    Id              SERIAL       PRIMARY KEY,
-    IdExterno       UUID NOT NULL DEFAULT gen_random_uuid(),
-    Nome            VARCHAR(150) NOT NULL,
-    CPF             VARCHAR(20)  NOT NULL,
-    CriadoEm        TIMESTAMP    NOT NULL DEFAULT CURRENT_DATE,
-    AtualizadoEm    TIMESTAMP    NOT NULL DEFAULT CURRENT_DATE
+    Id              INT                 PRIMARY KEY IDENTITY(1,1),
+    IdExterno       UNIQUEIDENTIFIER    NOT NULL DEFAULT NEWID(),
+    CriadoEm        DATETIME2           NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    AtualizadoEm    DATETIME2           NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    Nome            VARCHAR(150)        NOT NULL,
+    CPF             VARCHAR(20)         NOT NULL,
+    Celular         VARCHAR(20)         NOT NULL, -- tamanho a mais para caso o mesmo mude o tipo (ex: CNPJ que ira passar a ter letras)
+    Telefone        VARCHAR(20)         NOT NULL,
+    NascEm          DATE                NOT NULL
 );
 
 CREATE UNIQUE INDEX idx_unique_contas_id_externo ON Contas (IdExterno);
 
-INSERT INTO public.contas(nome, cpf)
-VALUES('Cleiton', '12345678909'), ('Paula', '71875805095');
+INSERT INTO contas(nome, cpf, Celular, Telefone, NascEm)
+VALUES
+    ('Cleiton', '12345678909', '11999999999', '1188888888', '2000-12-01'), 
+    ('Paula', '71875805095', '11999999999', '1188888888', '2000-01-01');
 
 CREATE TABLE Saldos
 (
-    Id              SERIAL PRIMARY KEY,
-    IdExterno       UUID NOT NULL DEFAULT gen_random_uuid(),
+    Id              INT                 PRIMARY KEY IDENTITY(1,1),
+    IdExterno       UNIQUEIDENTIFIER    NOT NULL DEFAULT NEWID(),
+    CriadoEm        DATETIME2           NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    AtualizadoEm    DATETIME2           NOT NULL DEFAULT CURRENT_TIMESTAMP,
     Valor           DECIMAL NOT NULL,
-    IdConta         INT NOT NULL,
-    CriadoEm        TIMESTAMP    NOT NULL DEFAULT CURRENT_DATE,
-    AtualizadoEm    TIMESTAMP    NOT NULL DEFAULT CURRENT_DATE
+    IdConta         INT NOT NULL
 );
 
 ALTER TABLE Saldos  
     ADD CONSTRAINT FK_CONTA_TO_SALDOS
         FOREIGN KEY (IdConta) REFERENCES Contas (Id);
 
-CREATE UNIQUE INDEX idx_unique_saldos_id_conta ON Saldos (IdConta);
+CREATE UNIQUE INDEX idx_unique_saldos_id_conta   ON Saldos (IdConta);
 CREATE UNIQUE INDEX idx_unique_saldos_id_externo ON Saldos (IdExterno);
 
 
@@ -39,14 +47,14 @@ VALUES (10.1, 1), (13.13, 2);
 
 CREATE TABLE Transacoes
 (
-    Id              SERIAL      PRIMARY KEY,
-    IdExterno       UUID        NOT NULL DEFAULT gen_random_uuid(),
-    CodigoOperacao  UUID        NOT NULL DEFAULT gen_random_uuid(),
-    IdConta         INT         NOT NULL,
-    IdContaDestino  INT         NOT NULL,
-    Valor           DECIMAL     NOT NULL,
-    CriadoEm        TIMESTAMP   NOT NULL DEFAULT CURRENT_DATE,
-    AtualizadoEm    TIMESTAMP   NOT NULL DEFAULT CURRENT_DATE
+    Id              INT                 PRIMARY KEY IDENTITY(1,1),
+    IdExterno       UNIQUEIDENTIFIER    NOT NULL DEFAULT NEWID(),
+    CriadoEm        DATETIME2           NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    AtualizadoEm    DATETIME2           NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CodigoOperacao  UNIQUEIDENTIFIER    NOT NULL DEFAULT NEWID(),
+    IdConta         INT                 NOT NULL,
+    IdContaDestino  INT                 NOT NULL,
+    Valor           DECIMAL             NOT NULL,
 );
 
 CREATE UNIQUE INDEX idx_unique_transacoes_codigo_operacao ON Transacoes (CodigoOperacao)

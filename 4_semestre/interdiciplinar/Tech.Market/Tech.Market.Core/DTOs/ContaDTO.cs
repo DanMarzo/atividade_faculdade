@@ -12,10 +12,11 @@ namespace Tech.Market.Core.DTOs
         {
             this.Cpf = entity.Cpf;
             this.Nome = entity.Nome;
-
             this.Id = entity.IdExterno;
             this.CriadoEm = entity.CriadoEm;
             this.AtualizadoEm = entity.AtualizadoEm;
+            this.Celular = entity.Celular;
+            this.Telefone = entity.Telefone;
         }
         public ContaDTO(ContaEntity entity, SaldoEntity? saldoEntity) : this(entity)
         {
@@ -29,9 +30,14 @@ namespace Tech.Market.Core.DTOs
 
         [JsonPropertyName("cpf")]
         public string Cpf { get; set; }
-
+        [JsonPropertyName("celular")]
+        public string Celular { get; set; }
+        [JsonPropertyName("telefone")]
+        public string Telefone { get; set; }
+        [JsonPropertyName("cpfMask")]
         public string CpfMask => MaskCpfPartial(this.Cpf);
 
+        [JsonPropertyName("saldo")]
         public SaldoDTO? Saldo { get; set; } = null;
 
         public string MaskCpfPartial(string cpf)

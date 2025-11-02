@@ -32,5 +32,13 @@ namespace Tech.Market.API.Controllers
             SaldoEntity? saldo  = await this._saldoRepository.GetByContaAsync(conta.Id);
             return Ok(new ContaDTO(conta, saldo));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> PostAsync(ContaRequestDTO request)
+        {
+            
+
+            return Created();
+        }
     }
 }

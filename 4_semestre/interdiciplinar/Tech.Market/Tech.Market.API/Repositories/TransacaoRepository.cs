@@ -1,6 +1,4 @@
-﻿using Tech.Market.Core.Entities;
-
-namespace Tech.Market.API.Repositories
+﻿namespace Tech.Market.API.Repositories
 {
     public class TransacaoRepository : ITransacaoRepository
     {
@@ -20,7 +18,7 @@ namespace Tech.Market.API.Repositories
             if (idConta.HasValue)
                 sql.AppendLine(" AND contas.id = @idConta ");
 
-            using (DbConnection connection = new NpgsqlConnection(this._connection.Default))
+            using (DbConnection connection = new SqlConnection(this._connection.Default))
             {
                 return await connection.QueryAsync<TransacaoEntity>(sql.ToString(), param: new
                 {
@@ -32,13 +30,13 @@ namespace Tech.Market.API.Repositories
         public async Task<TransacaoEntity> InsertAsync(TransacaoEntity entity)
         {
             string sql = @"
-                INSERT INTO public.transacoes
+                INSERT INTO transacoes
                 (CodigoOperacao, idconta, idcontaDestino, valor)
                 VALUES
                 (@CodigoOperacao, @IdConta, @idcontaDestino, @valor)
-                RETURNING *;
+                OUTPUT inserted.*;
             ";
-            using (DbConnection connection = new NpgsqlConnection(this._connection.Default))
+            using (DbConnection connection = new SqlConnection(this._connection.Default))
             {
                 return await connection.QueryFirstAsync<TransacaoEntity>(sql, param: entity);
             }

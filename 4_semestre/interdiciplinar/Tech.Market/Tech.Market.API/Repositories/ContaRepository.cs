@@ -17,7 +17,7 @@ namespace Tech.Market.API.Repositories
                 	SELECT 1 FROM Contas WHERE IdExterno = @Id
                 );
             ";
-            using (DbConnection connection = new NpgsqlConnection(this._connection.Default))
+            using (DbConnection connection = new SqlConnection(this._connection.Default))
             {
 
                 return await connection.QueryFirstOrDefaultAsync<bool>(sql, new { id });
@@ -28,25 +28,29 @@ namespace Tech.Market.API.Repositories
         {
             if (!ids.Any())
                 return Enumerable.Empty<ContaEntity>();
-            DynamicParameters parameters = new();
+            //DynamicParameters parameters = new();
+            //string sql = @$"
+            //    SELECT * FROM Contas 
+            //    WHERE Id IN ({string.Join(",", ids.Select((v, i) =>
+            //    {
+            //        parameters.Add($"id{i}", v);
+            //        return $"@id{i}";
+            //    }))})
+            //";
             string sql = @$"
                 SELECT * FROM Contas 
-                WHERE Id IN ({string.Join(",", ids.Select((v, i) =>
-                {
-                    parameters.Add($"id{i}", v);
-                    return $"@id{i}";
-                }))})
+                WHERE Id IN @ids
             ";
-            using (DbConnection connection = new NpgsqlConnection(this._connection.Default))
+            using (DbConnection connection = new SqlConnection(this._connection.Default))
             {
-                return await connection.QueryAsync<ContaEntity>(sql, parameters);
+                return await connection.QueryAsync<ContaEntity>(sql, new { ids });
             }
         }
 
         public async Task<IEnumerable<ContaEntity>> GetAsync()
         {
             string sql = "SELECT * FROM Contas";
-            using (DbConnection connection = new NpgsqlConnection(this._connection.Default))
+            using (DbConnection connection = new SqlConnection(this._connection.Default))
             {
                 return await connection.QueryAsync<ContaEntity>(sql);
             }
@@ -55,7 +59,7 @@ namespace Tech.Market.API.Repositories
         public async Task<ContaEntity?> GetAsync(Guid id)
         {
             string sql = "SELECT * FROM Contas WHERE IdExterno = @id";
-            using (DbConnection connection = new NpgsqlConnection(this._connection.Default))
+            using (DbConnection connection = new SqlConnection(this._connection.Default))
             {
                 return await connection.QueryFirstOrDefaultAsync<ContaEntity>(sql, new { id });
             }
@@ -65,18 +69,22 @@ namespace Tech.Market.API.Repositories
         {
             if (!ids.Any())
                 return Enumerable.Empty<ContaEntity>();
-            DynamicParameters parameters = new();
+            //DynamicParameters parameters = new();
+            //string sql = @$"
+            //    SELECT * FROM Contas 
+            //    WHERE IdExterno IN ({string.Join(",", ids.Select((v, i) =>
+            //{
+            //    parameters.Add($"id{i}", v);
+            //    return $"@id{i}";
+            //}))})
+            //";
             string sql = @$"
                 SELECT * FROM Contas 
-                WHERE IdExterno IN ({string.Join(",", ids.Select((v, i) =>
-            {
-                parameters.Add($"id{i}", v);
-                return $"@id{i}";
-            }))})
+                WHERE IdExterno IN @ids
             ";
-            using (DbConnection connection = new NpgsqlConnection(this._connection.Default))
+            using (DbConnection connection = new SqlConnection(this._connection.Default))
             {
-                return await connection.QueryAsync<ContaEntity>(sql, parameters);
+                return await connection.QueryAsync<ContaEntity>(sql, new { ids });
             }
         }
     }
