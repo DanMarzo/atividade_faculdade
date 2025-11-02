@@ -8,6 +8,6 @@
         public string Cpf { get; set; }
         public string Celular { get; set; }
         public string Telefone { get; set; }
-
+        public DateOnly NascEm { get; set; }
     }
 }

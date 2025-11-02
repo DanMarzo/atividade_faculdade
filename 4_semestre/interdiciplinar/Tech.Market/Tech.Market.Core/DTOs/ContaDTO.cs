@@ -17,6 +17,7 @@ namespace Tech.Market.Core.DTOs
             this.AtualizadoEm = entity.AtualizadoEm;
             this.Celular = entity.Celular;
             this.Telefone = entity.Telefone;
+            this.NascEm = entity.NascEm;
         }
         public ContaDTO(ContaEntity entity, SaldoEntity? saldoEntity) : this(entity)
         {
@@ -24,7 +25,7 @@ namespace Tech.Market.Core.DTOs
                 this.Saldo = new SaldoDTO(saldoEntity, entity);
         }
 
-
+        public DateOnly NascEm { get; set; }
         [JsonPropertyName("nome")]
         public string Nome { get; set; }
 

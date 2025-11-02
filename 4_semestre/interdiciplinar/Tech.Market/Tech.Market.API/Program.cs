@@ -1,3 +1,5 @@
+using Tech.Market.Core.Utils;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,6 +14,7 @@ builder.Services.AddScoped<ISaldoRepository, SaldoRepository>();
 builder.Services.AddScoped<IContaRepository, ContaRepository>();
 builder.Services.AddScoped<ITransacaoRepository, TransacaoRepository>();
 
+HandlerDapper.ApplyHandlerDapper();
 
 var app = builder.Build();
 

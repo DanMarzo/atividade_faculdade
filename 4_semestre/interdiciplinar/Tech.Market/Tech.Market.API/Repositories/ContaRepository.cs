@@ -1,6 +1,4 @@
-﻿using Tech.Market.Core.Entities;
-
-namespace Tech.Market.API.Repositories
+﻿namespace Tech.Market.API.Repositories
 {
     public class ContaRepository : IContaRepository
     {
@@ -85,6 +83,40 @@ namespace Tech.Market.API.Repositories
             using (DbConnection connection = new SqlConnection(this._connection.Default))
             {
                 return await connection.QueryAsync<ContaEntity>(sql, new { ids });
+            }
+        }
+
+        public async Task<ContaEntity> InsertAsync(ContaEntity entity)
+        {
+            string sql = @$"
+                INSERT INTO [dbo].[Contas]
+                    (
+                         IdExterno
+                        ,CriadoEm
+                        ,AtualizadoEm
+                        ,Nome
+                        ,CPF
+                        ,Celular
+                        ,Telefone
+                        ,NascEm
+                    )
+                OUTPUT INSERTED.*
+                VALUES
+                    (
+                         @IdExterno
+                        ,@CriadoEm
+                        ,@AtualizadoEm
+                        ,@Nome
+                        ,@CPF
+                        ,@Celular
+                        ,@Telefone
+                        ,@NascEm
+                    );
+
+            ";
+            using (DbConnection connection = new SqlConnection(this._connection.Default))
+            {
+                return await connection.QueryFirstAsync<ContaEntity>(sql, entity);
             }
         }
     }

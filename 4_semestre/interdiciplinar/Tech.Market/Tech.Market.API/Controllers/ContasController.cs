@@ -1,5 +1,6 @@
 ﻿using Tech.Market.Core.DTOs;
 using Tech.Market.Core.Entities;
+using Tech.Market.Core.Utils;
 
 namespace Tech.Market.API.Controllers
 {
@@ -29,16 +30,27 @@ namespace Tech.Market.API.Controllers
             ContaEntity? conta = await this._contaRepository.GetAsync(id);
             if (conta == null)
                 return NotFound();
-            SaldoEntity? saldo  = await this._saldoRepository.GetByContaAsync(conta.Id);
+            SaldoEntity? saldo = await this._saldoRepository.GetByContaAsync(conta.Id);
             return Ok(new ContaDTO(conta, saldo));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync(ContaRequestDTO request)
+        public async Task<IActionResult> PostAsync([FromBody] ContaRequestDTO request)
         {
-            
+            if (!ValidatorsUtils.TelefoneValido(request.Celular) || !ValidatorsUtils.TelefoneValido(request.Telefone))
+                return BadRequest(new { message = "Telefone inválido." });
 
-            return Created();
+            if (!ValidatorsUtils.CpfValido(request.Cpf))
+                return BadRequest(new { message = "CPF inválido." });
+
+            if (!ValidatorsUtils.DataNascimentoValida(request.NascEm))
+                return BadRequest(new { message = "Data nascimento inválida." });
+
+            if (string.IsNullOrEmpty(request.Nome))
+                return BadRequest(new { message = "Nome inválido." });
+
+            ContaEntity conta = await this._contaRepository.InsertAsync(request.CreateConta());
+            return Created("", new ContaDTO(conta));
         }
     }
 }

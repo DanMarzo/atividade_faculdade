@@ -1,6 +1,4 @@
-﻿using Tech.Market.Core.Entities;
-
-namespace Tech.Market.API.Contracts
+﻿namespace Tech.Market.API.Contracts
 {
     public interface IContaRepository
     {
@@ -9,5 +7,6 @@ namespace Tech.Market.API.Contracts
         Task<IEnumerable<ContaEntity>> GetAsync(params Guid[] ids);
         Task<IEnumerable<ContaEntity>> GetAsync();
         Task<ContaEntity?> GetAsync(Guid id);
+        Task<ContaEntity> InsertAsync(ContaEntity entity);
     }
 }
