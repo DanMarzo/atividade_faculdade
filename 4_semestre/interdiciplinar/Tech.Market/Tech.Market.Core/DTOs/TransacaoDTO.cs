@@ -14,6 +14,7 @@ namespace Tech.Market.Core.DTOs
             this.IdContaDestino = contaDestino.Id;
             this.ContaDestino = contaDestino;
             this.CodigoOperacao = transacao.CodigoOperacao;
+            this.Valor = transacao.Valor;
         }
         [JsonPropertyName("idConta")]
         public Guid IdConta { get; set; }
@@ -27,10 +28,7 @@ namespace Tech.Market.Core.DTOs
 
         [JsonPropertyName("codigoOperacao")]
         public Guid CodigoOperacao { get; set; }
+        [JsonPropertyName("valor")]
+        public decimal Valor { get; set; }
     }
 }
-
-
-/*
- [{"idConta":1,"conta":{"id":1,"nome":"Cleiton"},"idContaDestino":2,"contaDestino":{"id":2,"nome":"Paula"},"codigoOperacao":"60ace452-408a-4bc9-a495-6ad14acbb6c5"}]
- */

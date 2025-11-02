@@ -8,12 +8,16 @@ namespace Tech.Market.Core.DTOs
         public ContaDTO()
         {
         }
-
         public ContaDTO(ContaEntity entity)
         {
             this.Id = entity.IdExterno;
             this.Cpf = entity.Cpf;
             this.Nome = entity.Nome;
+        }
+        public ContaDTO(ContaEntity entity, SaldoEntity? saldoEntity) : this(entity)
+        {
+            if (saldoEntity != null)
+                this.Saldo = new SaldoDTO(saldoEntity, entity);
         }
 
         [JsonPropertyName("id")]
@@ -26,6 +30,9 @@ namespace Tech.Market.Core.DTOs
         public string Cpf { get; set; }
 
         public string CpfMask => MaskCpfPartial(this.Cpf);
+
+        public SaldoDTO? Saldo { get; set; } = null;
+
         public string MaskCpfPartial(string cpf)
         {
             if (string.IsNullOrEmpty(cpf) || cpf.Length != 11)

@@ -8,9 +8,12 @@ namespace Tech.Market.API.Controllers
     public class ContasController : ControllerBase
     {
         private readonly IContaRepository _contaRepository;
-        public ContasController(IContaRepository contaRepository)
+        private readonly ISaldoRepository _saldoRepository;
+
+        public ContasController(IContaRepository contaRepository, ISaldoRepository saldoRepository)
         {
-            this._contaRepository = contaRepository;
+            _contaRepository = contaRepository;
+            _saldoRepository = saldoRepository;
         }
 
         [HttpGet]
@@ -26,7 +29,8 @@ namespace Tech.Market.API.Controllers
             ContaEntity? conta = await this._contaRepository.GetAsync(id);
             if (conta == null)
                 return NotFound();
-            return Ok(new ContaDTO(conta));
+            SaldoEntity? saldo  = await this._saldoRepository.GetByContaAsync(conta.Id);
+            return Ok(new ContaDTO(conta, saldo));
         }
     }
 }
