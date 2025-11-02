@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Tech.Market.Core.Utils
+namespace Tech.Market.API.Utils
 {
     public static class ValidatorsUtils
     {

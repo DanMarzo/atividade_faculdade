@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using Tech.Market.Core.DTOs;
-using Tech.Market.Core.Entities;
+using Tech.Market.API.DTOs;
+using Tech.Market.API.Entities;
 
 namespace Tech.Market.API.Controllers
 {

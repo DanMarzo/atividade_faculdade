@@ -1,4 +1,4 @@
-﻿namespace Tech.Market.Core.DTOs
+﻿namespace Tech.Market.API.DTOs
 {
     public class TransacaoRequestDTO
     {

@@ -1,4 +1,4 @@
-using Tech.Market.Core.Utils;
+using Tech.Market.API.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 

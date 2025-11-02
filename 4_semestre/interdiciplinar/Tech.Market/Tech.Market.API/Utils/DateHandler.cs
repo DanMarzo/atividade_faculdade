@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using System.Data;
 
-namespace Tech.Market.Core.Utils
+namespace Tech.Market.API.Utils
 {
 
     public static class HandlerDapper

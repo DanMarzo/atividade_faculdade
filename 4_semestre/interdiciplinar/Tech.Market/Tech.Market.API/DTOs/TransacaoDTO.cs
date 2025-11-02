@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using Tech.Market.Core.Entities;
+using Tech.Market.API.Entities;
 
-namespace Tech.Market.Core.DTOs
+namespace Tech.Market.API.DTOs
 {
     public class TransacaoDTO : BaseDTO
     {

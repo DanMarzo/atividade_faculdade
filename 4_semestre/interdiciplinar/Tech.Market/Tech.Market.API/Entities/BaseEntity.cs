@@ -1,4 +1,4 @@
-﻿namespace Tech.Market.Core.Entities
+﻿namespace Tech.Market.API.Entities
 {
     public class BaseEntity
     {

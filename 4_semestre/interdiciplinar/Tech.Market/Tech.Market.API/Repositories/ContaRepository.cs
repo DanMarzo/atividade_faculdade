@@ -1,4 +1,6 @@
-﻿namespace Tech.Market.API.Repositories
+﻿using Tech.Market.API.Entities;
+
+namespace Tech.Market.API.Repositories
 {
     public class ContaRepository : IContaRepository
     {

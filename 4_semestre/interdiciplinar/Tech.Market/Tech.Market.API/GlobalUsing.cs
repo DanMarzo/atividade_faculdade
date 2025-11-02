@@ -9,4 +9,4 @@ global using System.Linq;
 global using System.Text;
 global using static Dapper.SqlMapper;
 global using Microsoft.Data.SqlClient;
-global using Tech.Market.Core.Entities;
+global using Tech.Market.API.Entities;

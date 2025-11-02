@@ -1,6 +1,6 @@
-﻿using Tech.Market.Core.DTOs;
-using Tech.Market.Core.Entities;
-using Tech.Market.Core.Utils;
+﻿using Tech.Market.API.DTOs;
+using Tech.Market.API.Entities;
+using Tech.Market.API.Utils;
 
 namespace Tech.Market.API.Controllers
 {
