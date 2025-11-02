@@ -49,6 +49,11 @@ namespace Tech.Market.API.Controllers
             if (string.IsNullOrEmpty(request.Nome))
                 return BadRequest(new { message = "Nome inválido." });
 
+            bool cpfUsado = await this._contaRepository.ExistsCPFAsync(request.Cpf);
+
+            if (cpfUsado)
+                return Conflict(new { message = "CPF já usado." });
+
             ContaEntity conta = await this._contaRepository.InsertAsync(request.CreateConta());
             return Created("", new ContaDTO(conta));
         }

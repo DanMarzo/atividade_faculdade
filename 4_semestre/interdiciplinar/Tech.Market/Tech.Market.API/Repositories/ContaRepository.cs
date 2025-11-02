@@ -1,6 +1,4 @@
-﻿using Tech.Market.API.Entities;
-
-namespace Tech.Market.API.Repositories
+﻿namespace Tech.Market.API.Repositories
 {
     public class ContaRepository : IContaRepository
     {
@@ -21,6 +19,20 @@ namespace Tech.Market.API.Repositories
             {
 
                 return await connection.QueryFirstOrDefaultAsync<bool>(sql, new { id });
+            }
+        }
+
+        public async Task<bool> ExistsCPFAsync(string cpf)
+        {
+            string sql = @"
+                SELECT EXISTS (
+                	SELECT 1 FROM Contas WHERE cpf = @cpf
+                );
+            ";
+            using (DbConnection connection = new SqlConnection(this._connection.Default))
+            {
+
+                return await connection.QueryFirstOrDefaultAsync<bool>(sql, new { cpf });
             }
         }
 

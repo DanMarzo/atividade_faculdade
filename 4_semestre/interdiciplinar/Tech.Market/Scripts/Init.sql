@@ -17,6 +17,7 @@ CREATE TABLE Contas
 );
 
 CREATE UNIQUE INDEX idx_unique_contas_id_externo ON Contas (IdExterno);
+CREATE UNIQUE INDEX idx_unique_contas_cpf        ON Contas (cpf);
 
 INSERT INTO contas(nome, cpf, Celular, Telefone, NascEm)
 VALUES
