@@ -3,16 +3,19 @@ using Tech.Market.Core.Entities;
 
 namespace Tech.Market.Core.DTOs
 {
-    public class ContaDTO
+    public class ContaDTO : BaseDTO
     {
         public ContaDTO()
         {
         }
         public ContaDTO(ContaEntity entity)
         {
-            this.Id = entity.IdExterno;
             this.Cpf = entity.Cpf;
             this.Nome = entity.Nome;
+
+            this.Id = entity.IdExterno;
+            this.CriadoEm = entity.CriadoEm;
+            this.AtualizadoEm = entity.AtualizadoEm;
         }
         public ContaDTO(ContaEntity entity, SaldoEntity? saldoEntity) : this(entity)
         {
@@ -20,8 +23,6 @@ namespace Tech.Market.Core.DTOs
                 this.Saldo = new SaldoDTO(saldoEntity, entity);
         }
 
-        [JsonPropertyName("id")]
-        public Guid Id { get; set; }
 
         [JsonPropertyName("nome")]
         public string Nome { get; set; }

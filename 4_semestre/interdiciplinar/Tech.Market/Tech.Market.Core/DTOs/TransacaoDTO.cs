@@ -3,7 +3,7 @@ using Tech.Market.Core.Entities;
 
 namespace Tech.Market.Core.DTOs
 {
-    public class TransacaoDTO
+    public class TransacaoDTO : BaseDTO
     {
         public TransacaoDTO()
         { }
@@ -15,7 +15,12 @@ namespace Tech.Market.Core.DTOs
             this.ContaDestino = contaDestino;
             this.CodigoOperacao = transacao.CodigoOperacao;
             this.Valor = transacao.Valor;
+
+            this.Id = transacao.IdExterno;
+            this.CriadoEm = transacao.CriadoEm;
+            this.AtualizadoEm = transacao.AtualizadoEm;
         }
+
         [JsonPropertyName("idConta")]
         public Guid IdConta { get; set; }
         [JsonPropertyName("conta")]

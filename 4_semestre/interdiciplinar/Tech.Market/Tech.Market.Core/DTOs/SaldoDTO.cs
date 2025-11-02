@@ -2,7 +2,7 @@
 
 namespace Tech.Market.Core.DTOs
 {
-    public class SaldoDTO
+    public class SaldoDTO : BaseDTO
     {
         public SaldoDTO() { }
         public SaldoDTO(SaldoEntity entity, ContaEntity conta)
@@ -10,9 +10,12 @@ namespace Tech.Market.Core.DTOs
             this.Id = entity.IdExterno;
             this.Valor = entity.Valor;
             this.IdConta = conta.IdExterno;
+
+            this.Id = entity.IdExterno;
+            this.CriadoEm = entity.CriadoEm;
+            this.AtualizadoEm = entity.AtualizadoEm;
         }
 
-        public Guid Id { get; set; }
         public decimal Valor { get; set; }
         public Guid IdConta { get; set; }
     }

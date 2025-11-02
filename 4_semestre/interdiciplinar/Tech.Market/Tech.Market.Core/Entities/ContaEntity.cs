@@ -1,12 +1,8 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Tech.Market.Core.Entities
+﻿namespace Tech.Market.Core.Entities
 {
-    public class ContaEntity
+    public class ContaEntity : BaseEntity
     {
-        public int Id { get; set; }
-
-        public Guid IdExterno { get; set; }
+        public ContaEntity() : base() { }
 
         public string Nome { get; set; }
         public string Cpf { get; set; }

@@ -1,8 +1,8 @@
 ﻿namespace Tech.Market.Core.Entities
 {
-    public class TransacaoEntity
+    public class TransacaoEntity : BaseEntity
     {
-        public TransacaoEntity()
+        public TransacaoEntity() : base()
         {
             this.CodigoOperacao = Guid.NewGuid();
         }
@@ -14,7 +14,6 @@
             this.Valor = valor;
         }
 
-        public int Id { get; set; }
         public Guid CodigoOperacao { get; set; }
         public int IdConta { get; set; }
         public int IdContaDestino { get; set; }

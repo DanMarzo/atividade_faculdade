@@ -2,10 +2,12 @@ CREATE DATABASE TechMarketDB;
 
 CREATE TABLE Contas
 (
-    Id          SERIAL       PRIMARY KEY,
-    IdExterno   UUID NOT NULL DEFAULT gen_random_uuid(),
-    Nome        VARCHAR(150) NOT NULL,
-    CPF         VARCHAR(20)  NOT NULL
+    Id              SERIAL       PRIMARY KEY,
+    IdExterno       UUID NOT NULL DEFAULT gen_random_uuid(),
+    Nome            VARCHAR(150) NOT NULL,
+    CPF             VARCHAR(20)  NOT NULL,
+    CriadoEm        TIMESTAMP    NOT NULL DEFAULT CURRENT_DATE,
+    AtualizadoEm    TIMESTAMP    NOT NULL DEFAULT CURRENT_DATE
 );
 
 CREATE UNIQUE INDEX idx_unique_contas_id_externo ON Contas (IdExterno);
@@ -15,10 +17,12 @@ VALUES('Cleiton', '12345678909'), ('Paula', '71875805095');
 
 CREATE TABLE Saldos
 (
-    Id          SERIAL PRIMARY KEY,
-    IdExterno   UUID NOT NULL DEFAULT gen_random_uuid(),
-    Valor       DECIMAL NOT NULL,
-    IdConta     INT NOT NULL 
+    Id              SERIAL PRIMARY KEY,
+    IdExterno       UUID NOT NULL DEFAULT gen_random_uuid(),
+    Valor           DECIMAL NOT NULL,
+    IdConta         INT NOT NULL,
+    CriadoEm        TIMESTAMP    NOT NULL DEFAULT CURRENT_DATE,
+    AtualizadoEm    TIMESTAMP    NOT NULL DEFAULT CURRENT_DATE
 );
 
 ALTER TABLE Saldos  
@@ -35,12 +39,14 @@ VALUES (10.1, 1), (13.13, 2);
 
 CREATE TABLE Transacoes
 (
-    Id              SERIAL       PRIMARY KEY,
-    IdExterno       UUID NOT NULL DEFAULT gen_random_uuid(),
+    Id              SERIAL      PRIMARY KEY,
+    IdExterno       UUID        NOT NULL DEFAULT gen_random_uuid(),
     CodigoOperacao  UUID        NOT NULL DEFAULT gen_random_uuid(),
-    IdConta         INT NOT NULL,
-    IdContaDestino  INT NOT NULL,
-    Valor           DECIMAL     NOT NULL
+    IdConta         INT         NOT NULL,
+    IdContaDestino  INT         NOT NULL,
+    Valor           DECIMAL     NOT NULL,
+    CriadoEm        TIMESTAMP   NOT NULL DEFAULT CURRENT_DATE,
+    AtualizadoEm    TIMESTAMP   NOT NULL DEFAULT CURRENT_DATE
 );
 
 CREATE UNIQUE INDEX idx_unique_transacoes_codigo_operacao ON Transacoes (CodigoOperacao)
