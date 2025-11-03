@@ -32,9 +32,10 @@ export default function RootLayout({
         <div className="flex h-screen w-screen overflow-hidden">
           <div className="flex-1 flex flex-col ">
             <nav className="h-14 flex items-center px-4 bg-blue-900 gap-4">
-              <h1 className=" text-white">Tech Market</h1>
               <div className="flex gap-4">
-                <Link href={"/"}>Inicio</Link>
+                <Link href={"/"}>
+                  <h1 className=" text-white">Tech Market - Inicio</h1>
+                </Link>
               </div>
             </nav>
             <div className="flex-1 overflow-auto bg-background-100 p-4 h-full">

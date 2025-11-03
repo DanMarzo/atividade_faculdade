@@ -76,6 +76,13 @@ const validarTelefone = (telefone: string): boolean => {
 
   return false;
 };
+function formatarData(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() é 0-based
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
 
 const NovaContaComponent = () => {
   const className =
@@ -91,7 +98,7 @@ const NovaContaComponent = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFormCriarConta = (request: any) => {
     axios
-      .post("/api/transferencia", request)
+      .post("/api/contas", request)
       .then(() => {
         router.refresh();
         setOpen(false);
@@ -217,7 +224,7 @@ const NovaContaComponent = () => {
               required: "Data de nascimento é obrigatória",
               validate: validarNascimento,
             }}
-            defaultValue=""
+            defaultValue={formatarData(new Date())}
             render={({ field, fieldState }) => (
               <>
                 <LabelLogin htmlFor="nascEm" label="Nascimento em:" />
