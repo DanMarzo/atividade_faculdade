@@ -1,6 +1,7 @@
 import { HomeServerViewModel } from "@/view-models/home.server.view-model";
 import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
+import { NovaContaComponent } from "./(components)/nova-conta.component";
 
 const HomePage = async () => {
   const homeViewModel = new HomeServerViewModel();
@@ -8,6 +9,9 @@ const HomePage = async () => {
 
   return (
     <div className="grid grid-cols-12 gap-4 content-center">
+      <div className="col-span-6 col-start-4 justify-end flex">
+        <NovaContaComponent />
+      </div>
       <div className="col-span-6 col-start-4 ">
         <ul>
           {homeViewModel.contas.map((item) => {

@@ -1,10 +1,23 @@
 import { InputHTMLAttributes, useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import InputMask from "@mona-health/react-input-mask";
 
 interface ICustomInputProps<T>
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "id" | "name"> {
   id: keyof T;
   name: keyof T;
+}
+
+interface ICustomInputMaksProps<T>
+  extends Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    "id" | "name" | "children"
+  > {
+  id: keyof T;
+  name: keyof T;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  children?: (inputProps: any) => React.ReactNode;
+  mask: string | Array<string | RegExp>;
 }
 
 interface ICustomInputPasswordProps<T>
@@ -20,6 +33,17 @@ function createCustomInput<T>() {
   const Input = ({ id, name, ...attr }: ICustomInputProps<T>) => {
     return (
       <input
+        name={name.toString()}
+        className={className}
+        {...attr}
+        id={id.toString()}
+      />
+    );
+  };
+
+  const InputMasked = ({ id, name, ...attr }: ICustomInputMaksProps<T>) => {
+    return (
+      <InputMask
         name={name.toString()}
         className={className}
         {...attr}
@@ -51,6 +75,7 @@ function createCustomInput<T>() {
   };
 
   Input.Password = Password;
+  Input.InputMasked = InputMasked;
   return Input;
 }
 

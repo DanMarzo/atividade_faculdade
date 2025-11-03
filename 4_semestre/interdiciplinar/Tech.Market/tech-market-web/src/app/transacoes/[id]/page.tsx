@@ -3,7 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { BsArrowLeft } from "react-icons/bs";
 import { BsPlus } from "react-icons/bs";
-import { NovaTransferenciaComponent } from "./components/nova-transferencia.component";
+import { NovaTransferenciaComponent } from "./(components)/nova-transferencia.component";
 
 const TransacoesPage = async ({
   params,
