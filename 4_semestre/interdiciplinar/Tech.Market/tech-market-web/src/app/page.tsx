@@ -9,10 +9,10 @@ const HomePage = async () => {
 
   return (
     <div className="grid grid-cols-12 gap-4 content-center">
-      <div className="col-span-6 col-start-4 justify-end flex">
+      <div className="col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6  md:col-start-4  lg:col-start-4 xl:col-start-4 justify-end flex">
         <NovaContaComponent />
       </div>
-      <div className="col-span-6 col-start-4 ">
+      <div className="col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6  md:col-start-4  lg:col-start-4 xl:col-start-4">
         <ul>
           {homeViewModel.contas.map((item) => {
             return (
