@@ -39,10 +39,10 @@
 
             if (saldos.Any(x => x.Value == null))
             {
-                IEnumerable<SaldoEntity> saldosEntities = await this._saldoRepository.InsertAsync(entities: saldos.Where(x => x.Value == null).Select(x => new SaldoEntity
-                { IdConta = x.Key, Valor = 0 }));
-                foreach (var item in saldosEntities)
-                { saldos[item.IdConta] = item; }
+                foreach (var item in saldos.Where(x => x.Value == null))
+                {
+                    saldos[item.Key] = await this._saldoRepository.InsertAsync(new SaldoEntity{ IdConta = item.Key, Valor = 0 });
+                }
             }
             if (saldos.Any(x => x.Value == null))
                 return BadRequest(new { message = "Erro desconhecido." });
@@ -53,11 +53,11 @@
             saldos[contaDestino.Id]!.Valor += request.Valor;
             saldos[contaOrigem.Id]!.Valor -= request.Valor;
 
-            Task<IEnumerable<SaldoEntity>> updateSaldoTask = this._saldoRepository.InsertAsync(entities: saldos.Select(x => x.Value));
-
+            List<Task> tasks = new List<Task>();
+            tasks.AddRange(saldos.Select(x => this._saldoRepository.InsertAsync(x.Value)));
             Task<TransacaoEntity> novaTransacaoTask = this._transacaoRepository.InsertAsync(new TransacaoEntity(idConta: contaOrigem.Id, idContaDestino: contaDestino.Id, valor: request.Valor));
-
-            await Task.WhenAll(novaTransacaoTask, updateSaldoTask);
+            tasks.Add(novaTransacaoTask);
+            await Task.WhenAll(tasks);
             return Created("", new TransacaoDTO(new ContaDTO(contaOrigem), new ContaDTO(contaDestino), novaTransacaoTask.Result));
         }
 

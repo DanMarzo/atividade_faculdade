@@ -31,16 +31,35 @@ namespace Tech.Market.API.Repositories
 
         public async Task<TransacaoEntity> InsertAsync(TransacaoEntity entity)
         {
+
             string sql = @"
-                INSERT INTO transacoes
-                (CodigoOperacao, idconta, idcontaDestino, valor)
+                INSERT INTO TECH_MARKET_DB.dbo.Transacoes
+                    (
+                        IdExterno, 
+                        CriadoEm, 
+                        AtualizadoEm, 
+                        CodigoOperacao, 
+                        IdConta, 
+                        IdContaDestino, 
+                        Valor
+                    )
+                OUTPUT INSERTED.*
                 VALUES
-                (@CodigoOperacao, @IdConta, @idcontaDestino, @valor)
-                OUTPUT inserted.*;
+                    (
+                        @IdExterno, 
+                        @CriadoEm, 
+                        @AtualizadoEm, 
+                        @CodigoOperacao, 
+                        @IdConta, 
+                        @IdContaDestino, 
+                        @Valor
+                    );
             ";
             using (DbConnection connection = new SqlConnection(this._connection.Default))
             {
-                return await connection.QueryFirstAsync<TransacaoEntity>(sql, param: entity);
+                entity = await connection.QueryFirstOrDefaultAsync<TransacaoEntity>(sql, entity);
+                //var rr = await connection.ExecuteAsync(sql, parametros);
+                return entity;
             }
         }
     }
