@@ -55,7 +55,7 @@ CREATE TABLE Transacoes
     CodigoOperacao  UNIQUEIDENTIFIER    NOT NULL DEFAULT NEWID(),
     IdConta         INT                 NOT NULL,
     IdContaDestino  INT                 NOT NULL,
-    Valor           DECIMAL             NOT NULL
+    Valor           DECIMAL(18,2)       NOT NULL
 );
 
 CREATE UNIQUE INDEX idx_unique_transacoes_codigo_operacao ON Transacoes (CodigoOperacao)
