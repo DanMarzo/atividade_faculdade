@@ -10,3 +10,5 @@ global using System.Text;
 global using static Dapper.SqlMapper;
 global using Microsoft.Data.SqlClient;
 global using Tech.Market.API.Entities;
+global using Tech.Market.API.DTOs;
+global using Tech.Market.API.Utils;

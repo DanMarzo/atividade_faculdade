@@ -1,8 +1,4 @@
-﻿using Tech.Market.API.DTOs;
-using Tech.Market.API.Entities;
-using Tech.Market.API.Utils;
-
-namespace Tech.Market.API.Controllers
+﻿namespace Tech.Market.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
