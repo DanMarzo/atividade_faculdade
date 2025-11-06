@@ -24,7 +24,4 @@ BEGIN
 
 END;
 
-EXEC CalcSaldoConta 
-	@IdConta = 2,
-	@Inicio = '2025-11-01 00:00:00', 
-	@Fim = '2025-11-11 23:59:59';
+EXEC CalcSaldoConta @IdConta = 2, @Inicio = '2025-11-01 00:00:00', @Fim = '2025-11-11 23:59:59';
