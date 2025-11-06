@@ -121,7 +121,7 @@ const NovaContaComponent = () => {
       <ModalComponent
         isOpen={open}
         onClose={() => setOpen(!open)}
-        title="Nova transferência"
+        title="Nova conta"
       >
         <form
           className="flex flex-col gap-3"
