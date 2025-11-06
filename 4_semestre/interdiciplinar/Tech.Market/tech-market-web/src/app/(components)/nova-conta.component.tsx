@@ -98,7 +98,7 @@ const NovaContaComponent = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFormCriarConta = (request: any) => {
     axios
-      .post("/api/contas", request)
+      .post("/api/conta", request)
       .then(() => {
         router.refresh();
         setOpen(false);

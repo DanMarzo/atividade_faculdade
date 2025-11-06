@@ -25,9 +25,13 @@
         public async Task<bool> ExistsCPFAsync(string cpf)
         {
             string sql = @"
-                SELECT EXISTS (
-                	SELECT 1 FROM Contas WHERE cpf = @cpf
-                );
+                SELECT 
+                CASE 
+                    WHEN EXISTS (SELECT 1 FROM Contas WHERE cpf = @cpf) 
+                    THEN 1 
+                    ELSE 0 
+                END AS Existe;
+
             ";
             using (DbConnection connection = new SqlConnection(this._connection.Default))
             {
