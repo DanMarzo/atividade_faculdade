@@ -33,19 +33,21 @@ const TransacoesPage = async ({
   return (
     <>
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center max-w-4xl mx-auto relative">
-          <div className="flex justify-end col-span-2">
-            <NovaTransferenciaComponent
-              contaOrigem={transacoesViewModel.conta}
-              contas={transacoesViewModel.contas.filter(
-                (x) => x.id != transacoesViewModel.conta?.id
-              )}
-            >
-              Nova transferência <BsPlus className="text-xl" />
-            </NovaTransferenciaComponent>
+        <div className="grid xl:grid-cols-2 md:grid-cols-2 gap-6 justify-center max-w-4xl mx-auto relative">
+          <div className="flex justify-end xl:col-span-2 md:col-span-2 sm:col-span-2">
+            <div>
+              <NovaTransferenciaComponent
+                contaOrigem={transacoesViewModel.conta}
+                contas={transacoesViewModel.contas.filter(
+                  (x) => x.id != transacoesViewModel.conta?.id
+                )}
+              >
+                Nova transferência <BsPlus className="text-xl" />
+              </NovaTransferenciaComponent>
+            </div>
           </div>
           <div>
-            <div className="bg-white p-6 rounded-lg shadow relative ">
+            <div className="bg-white p-6 rounded-lg shadow relative xl:col-span-1 md:col-span-2">
               <Link href={"/"} className="absolute right-0 top-0 p-2">
                 <BsArrowLeft className="text-blue-900" />
               </Link>
@@ -65,7 +67,7 @@ const TransacoesPage = async ({
               )}
             </div>
           </div>
-          <div>
+          <div className="xl:col-span-1 md:col-span-2">
             {transacoesViewModel.transacoes.map((item, index) => {
               return (
                 <div
