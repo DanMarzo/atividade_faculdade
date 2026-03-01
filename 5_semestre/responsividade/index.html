@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsividade</title>
+    <link rel="stylesheet" href="style.css?v=1">
+</head>
+
+<body>
+    <main id="main">
+        
+    </main>
+
+    <script>
+        let nomes = [
+            "FRANÇA",
+            "ESTADOS UNIDOS",
+            "ESPANHA",
+            "CHINA",
+            "ITÁLIA",
+            "TURQUIA"
+        ];
+        let compMain = document.getElementById("main");
+
+        nomes.forEach(element => {
+            compMain.innerHTML += `
+                <div class="item_nome">${element}</div>
+            `;
+            console.table(element)
+        });
+    </script>
+</body>
+
+</html>
