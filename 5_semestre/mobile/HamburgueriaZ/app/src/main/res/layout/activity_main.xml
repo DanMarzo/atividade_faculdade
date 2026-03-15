@@ -71,6 +71,7 @@
                 android:gravity="center_vertical">
 
                 <Button
+                    android:id="@+id/btn_down"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:text="-"
@@ -90,6 +91,7 @@
                     android:textSize="18sp" />
 
                 <Button
+                    android:id="@+id/btn_plus"
                     app:cornerRadius="8dp"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
