@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HamburgueriaZ</string>
+    <string name="FAZER_PEDIDO">Faça seu pedido</string>
+    <string name="LBL_NOME">Nome</string>
 </resources>
