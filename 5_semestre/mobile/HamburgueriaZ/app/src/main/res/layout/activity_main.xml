@@ -21,13 +21,17 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
+            <ImageView
+                android:id="@+id/iv_logo_hamburgueria"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:text="Faça seu pedido!"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_height="200dp"
+                android:contentDescription="Logotipo da Hamburgueria Z"
+                android:scaleType="centerInside"
+                android:src="@drawable/logo"
+                tools:ignore="MissingConstraints" />
+            <TextView
+                style="@style/EstiloTexto"
+                android:text="Faça seu pedido!" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -57,11 +61,8 @@
                 android:text="Onion Rings"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quantidade"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp"/>
+                style="@style/EstiloTexto"
+                android:text="Quantidade"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -84,9 +85,9 @@
                     android:id="@+id/txtQuantidade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
                     android:text="0"
-                    android:textSize="18sp"
-                    android:layout_marginHorizontal="16dp"/>
+                    android:textSize="18sp" />
 
                 <Button
                     app:cornerRadius="8dp"
@@ -102,19 +103,14 @@
             </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Resumo do pedido"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp"/>
+                style="@style/EstiloTexto"
+                android:text="Resumo do pedido"/>
 
             <TextView
                 android:id="@+id/txtPreco"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/EstiloTexto"
                 android:text="R$ 0"
-                android:textSize="16sp"
-                android:layout_marginBottom="16dp"/>
+                />
 
             <Button
                 android:layout_width="wrap_content"
