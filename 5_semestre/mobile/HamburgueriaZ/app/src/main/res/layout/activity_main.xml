@@ -100,10 +100,22 @@
                 style="@style/EstiloTexto"
                 android:text="Resumo do pedido" />
 
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/EstiloTexto"
+                android:text="R$ " />
+
             <TextView
                 android:id="@+id/txtPreco"
                 style="@style/EstiloTexto"
-                android:text="R$ 0" />
+                android:text="0" />
+        </LinearLayout>
+
 
             <Button
                 android:id="@+id/fazer_pedido_btn"

@@ -1,5 +1,7 @@
 package com.marzo.hamburgueriaz;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,12 +26,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tvQuantidade;
+    private TextView resumo;
     private int quantidade = 0; // Variável de controle numérica
-
     private List<AcompanhamentoModel> acompanhamentos = new ArrayList<>();
 
     private void seedtAcompanhamentos() {
-
         this.acompanhamentos.add(new AcompanhamentoModel(1, 2, "Bacon"));
         this.acompanhamentos.add(new AcompanhamentoModel(2, 2, "Queijo"));
         this.acompanhamentos.add(new AcompanhamentoModel(3, 3, "Onion Rings"));
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         tvQuantidade = findViewById(R.id.txtQuantidade);
+        resumo = findViewById(R.id.txtPreco);
         Button btnIncrementar = findViewById(R.id.btn_plus);
         Button btnDecrementar = findViewById(R.id.btn_down);
 
@@ -81,10 +84,7 @@ public class MainActivity extends AppCompatActivity {
             cb.setTag(item.getId()); // ID da sua aplicação/banco
 
             // Define os parâmetros de layout (Equivalente ao Width/Height do Windows Forms)
-            cb.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
+            cb.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
             // Evento de clique usando Lambda (disponível no seu Java 11)
             cb.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -109,11 +109,7 @@ public class MainActivity extends AppCompatActivity {
     private void onCheckedItensAcompanhamentos(CompoundButton buttonView, boolean isChecked) {
         int idRecuperado = Integer.parseInt(buttonView.getTag().toString());
 
-        AcompanhamentoModel acompanhamento = acompanhamentos
-                .stream()
-                .filter(X -> X.getId() == idRecuperado)
-                .findFirst()
-                .orElse(null);
+        AcompanhamentoModel acompanhamento = acompanhamentos.stream().filter(X -> X.getId() == idRecuperado).findFirst().orElse(null);
 
         if (acompanhamento == null) {
             Log.d("PEDIDO", "Selecionou o ID: " + idRecuperado + "E nao foi encontrado, mas como e so tarefa da facul nao vou mais tratar");
@@ -128,10 +124,10 @@ public class MainActivity extends AppCompatActivity {
             totalPriceAcompanhamentos -= acompanhamento.getPrice();
         }
 
-        if (quantidade == 0)
-            return;
+        if (quantidade == 0) return;
         acompanhamento.setSelecionado(isChecked);
         totalPriceComQtde = quantidade * totalPriceAcompanhamentos;
+        resumo.setText(String.valueOf(totalPriceComQtde));
         Log.d("PEDIDO", "Desmarcou o ID: " + idRecuperado + "Total " + totalPriceAcompanhamentos);
     }
 
@@ -139,19 +135,24 @@ public class MainActivity extends AppCompatActivity {
         quantidade++;
         tvQuantidade.setText(String.valueOf(quantidade));
 
-        if (totalPriceAcompanhamentos > 0)
+        if (totalPriceAcompanhamentos > 0) {
             totalPriceComQtde = quantidade * totalPriceAcompanhamentos;
+            resumo.setText(String.valueOf(totalPriceComQtde));
+        }
     }
 
     private void decrementarItem() {
-        if (quantidade == 0)
-            return;
+        if (quantidade == 0) return;
 
         quantidade--;
         tvQuantidade.setText(String.valueOf(quantidade));
 
-        if (totalPriceAcompanhamentos > 0)
+        if (totalPriceAcompanhamentos > 0) {
             totalPriceComQtde = quantidade * totalPriceAcompanhamentos;
+            resumo.setText(String.valueOf(totalPriceComQtde));
+        } else
+            resumo.setText(String.valueOf(0));
+
     }
 
     private void enviarPedido() {
@@ -159,18 +160,33 @@ public class MainActivity extends AppCompatActivity {
         String nome = String.valueOf(nomeUsuario.getText());
 
         if (nome.isBlank()) {
-            Log.d("Pedido", "Inclua seu nome");
+            Toast.makeText(this, "Inclua seu nome", Toast.LENGTH_SHORT).show();
             return;
         }
         if (quantidade == 0 || totalPriceAcompanhamentos == 0) {
-            Log.d("Pedido", "Selecione alguam coisa ne");
+            Toast.makeText(this, "Selecione alguam coisa ne", Toast.LENGTH_SHORT).show();
             return;
         }
 
         float total = this.quantidade * totalPriceAcompanhamentos;
         Log.d("Pedido", "Nome " + nome + " Total " + total);
+
+        StringBuilder resumo = new StringBuilder();
+        resumo.append(String.format("%s \n", nome));
+
         for (AcompanhamentoModel item : acompanhamentos) {
+            resumo.append(String.format("Tem %s? %s\n", item.getName(), item.isSelecionado() ? "Sim" : "Não"));
             Log.d("ITEM PEDIDO", "Nome: " + item.getName() + " Incluido: " + item.isSelecionado());
         }
+        resumo.append(String.format("Quantidade: %d \n", quantidade));
+        resumo.append(String.format("Preço final: R$ %.2f \n", quantidade * totalPriceAcompanhamentos));
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"contato@hamburgueria.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Novo Pedido - " + nome);
+        intent.putExtra(Intent.EXTRA_TEXT, resumo.toString());
+        startActivity(intent);
     }
 }
