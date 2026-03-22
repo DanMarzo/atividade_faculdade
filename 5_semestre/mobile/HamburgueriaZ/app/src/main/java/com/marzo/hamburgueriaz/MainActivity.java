@@ -69,25 +69,30 @@ public class MainActivity extends AppCompatActivity {
 
         //Nao sei se é uma boa pratica fazer isso nesse override, mas nao sou especialista mesmo
         LinearLayout container = findViewById(R.id.pedidos_check_itens);
-        for (AcompanhamentoModel item : this.acompanhamentos) {
-            // Este mano cria a instancia do CheckBox, parece com Windows Forms
+        // Usando o for clássico com índice i
+        for (int i = 0; i < this.acompanhamentos.size(); i++) {
+            // Recupera o item da lista pela posição (Índice)
+            AcompanhamentoModel item = this.acompanhamentos.get(i);
+
             CheckBox cb = new CheckBox(this);
 
+            // Configurações básicas
             cb.setText(item.getName());
-            cb.setTag(item.getId());
+            cb.setTag(item.getId()); // ID da sua aplicação/banco
+
+            // Define os parâmetros de layout (Equivalente ao Width/Height do Windows Forms)
             cb.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             ));
-            // Mano que horrivel ter que fazer isso toda hora hahah
-            cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    onCheckedItensAcompanhamentos(buttonView, isChecked);
-                }
+
+            // Evento de clique usando Lambda (disponível no seu Java 11)
+            cb.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                // Aqui você chama o seu método de processamento
+                onCheckedItensAcompanhamentos(buttonView, isChecked);
             });
 
-            // Termina de incluir na View
+            // Adiciona o CheckBox criado ao seu LinearLayout do XML
             container.addView(cb);
         }
 
