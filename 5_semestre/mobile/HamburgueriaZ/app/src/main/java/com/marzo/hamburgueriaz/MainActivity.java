@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         this.acompanhamentos.add(new AcompanhamentoModel(3, 3, "Onion Rings"));
     }
 
-    private float totalPrice = 0;
+    private float totalPriceAcompanhamentos = 0;
+    private float totalPriceComQtde = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,46 +83,87 @@ public class MainActivity extends AppCompatActivity {
             cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    int idRecuperado = Integer.parseInt(buttonView.getTag().toString());
-
-                    AcompanhamentoModel acompanhamento = acompanhamentos
-                            .stream()
-                            .filter(X -> X.getId() == idRecuperado)
-                            .findFirst()
-                            .orElse(null);
-
-                    if (acompanhamento == null) {
-                        Log.d("PEDIDO", "Selecionou o ID: " + idRecuperado + "E nao foi encontrado, mas como e so tarefa da facul nao vou mais tratar");
-                        return;
-                    }
-
-                    if (isChecked) {
-                        Log.d("PEDIDO", "Selecionou o ID: " + idRecuperado);
-                        totalPrice += acompanhamento.getPrice();
-                    } else {
-                        Log.d("PEDIDO", "Desmarcou o ID: " + idRecuperado);
-                        totalPrice -= acompanhamento.getPrice();
-                    }
-
-                    Log.d("PEDIDO", "Desmarcou o ID: " + idRecuperado + "Total " + totalPrice);
+                    onCheckedItensAcompanhamentos(buttonView, isChecked);
                 }
             });
 
             // Termina de incluir na View
             container.addView(cb);
         }
+
+        Button fazerPedidoBtn = findViewById(R.id.fazer_pedido_btn);
+
+        fazerPedidoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                enviarPedido();
+            }
+        });
+    }
+
+    private void onCheckedItensAcompanhamentos(CompoundButton buttonView, boolean isChecked) {
+        int idRecuperado = Integer.parseInt(buttonView.getTag().toString());
+
+        AcompanhamentoModel acompanhamento = acompanhamentos
+                .stream()
+                .filter(X -> X.getId() == idRecuperado)
+                .findFirst()
+                .orElse(null);
+
+        if (acompanhamento == null) {
+            Log.d("PEDIDO", "Selecionou o ID: " + idRecuperado + "E nao foi encontrado, mas como e so tarefa da facul nao vou mais tratar");
+            return;
+        }
+
+        if (isChecked) {
+            Log.d("PEDIDO", "Selecionou o ID: " + idRecuperado);
+            totalPriceAcompanhamentos += acompanhamento.getPrice();
+        } else {
+            Log.d("PEDIDO", "Desmarcou o ID: " + idRecuperado);
+            totalPriceAcompanhamentos -= acompanhamento.getPrice();
+        }
+
+        if (quantidade == 0)
+            return;
+
+        totalPriceComQtde = quantidade * totalPriceAcompanhamentos;
+        Log.d("PEDIDO", "Desmarcou o ID: " + idRecuperado + "Total " + totalPriceAcompanhamentos);
     }
 
     private void incrementarItem() {
         quantidade++;
         tvQuantidade.setText(String.valueOf(quantidade));
+
+        if (totalPriceAcompanhamentos > 0)
+            totalPriceComQtde = quantidade * totalPriceAcompanhamentos;
     }
 
     private void decrementarItem() {
-
         if (quantidade == 0)
             return;
+
         quantidade--;
         tvQuantidade.setText(String.valueOf(quantidade));
+
+        if (totalPriceAcompanhamentos > 0)
+            totalPriceComQtde = quantidade * totalPriceAcompanhamentos;
+    }
+
+    private void enviarPedido() {
+        TextView nomeUsuario = findViewById(R.id.nome_usuario);
+        String nome = String.valueOf(nomeUsuario.getText());
+
+        if (nome.isBlank()) {
+            Log.d("Pedido", "Inclua seu nome");
+            return;
+        }
+        if (quantidade == 0 || totalPriceAcompanhamentos == 0) {
+            Log.d("Pedido", "Selecione alguam coisa ne");
+            return;
+        }
+
+        float total = this.quantidade * totalPriceAcompanhamentos;
+        Log.d("Pedido", "Nome " + nome + " Total " + total);
+
     }
 }
