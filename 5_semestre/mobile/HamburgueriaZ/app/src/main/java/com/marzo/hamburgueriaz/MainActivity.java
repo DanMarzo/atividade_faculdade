@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (quantidade == 0)
             return;
-
+        acompanhamento.setSelecionado(isChecked);
         totalPriceComQtde = quantidade * totalPriceAcompanhamentos;
         Log.d("PEDIDO", "Desmarcou o ID: " + idRecuperado + "Total " + totalPriceAcompanhamentos);
     }
@@ -164,6 +164,8 @@ public class MainActivity extends AppCompatActivity {
 
         float total = this.quantidade * totalPriceAcompanhamentos;
         Log.d("Pedido", "Nome " + nome + " Total " + total);
-
+        for (AcompanhamentoModel item : acompanhamentos) {
+            Log.d("ITEM PEDIDO", "Nome: " + item.getName() + " Incluido: " + item.isSelecionado());
+        }
     }
 }

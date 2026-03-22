@@ -4,6 +4,15 @@ public class AcompanhamentoModel {
     private int id;
     private float price;
     private String name;
+    private boolean selecionado;
+
+    public boolean isSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado = selecionado;
+    }
 
     //Existe overload ainda bem
     public AcompanhamentoModel(float price, String name) {
