@@ -124,8 +124,9 @@ public class MainActivity extends AppCompatActivity {
             totalPriceAcompanhamentos -= acompanhamento.getPrice();
         }
 
-        if (quantidade == 0) return;
         acompanhamento.setSelecionado(isChecked);
+
+        if (quantidade == 0) return;
         totalPriceComQtde = quantidade * totalPriceAcompanhamentos;
         resumo.setText(String.valueOf(totalPriceComQtde));
         Log.d("PEDIDO", "Desmarcou o ID: " + idRecuperado + "Total " + totalPriceAcompanhamentos);
